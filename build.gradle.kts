@@ -44,7 +44,7 @@ publishing {
     repositories {
         maven {
             name = "JopgaRepo"
-            url = uri("https://repo.jopga.me/private")
+            url = uri("https://repo.jopga.me/releases")
             credentials {
                 username = project.findProperty("jopga.user").toString()
                 password = project.findProperty("jopga.key").toString()
