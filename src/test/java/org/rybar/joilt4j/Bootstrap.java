@@ -1,9 +1,20 @@
 package org.rybar.joilt4j;
 
+import org.rybar.joilt4j.format.LogFormatter;
+import org.rybar.joilt4j.sink.LogSink;
+
 public class Bootstrap {
     public static void main(String[] args) {
-        Logger.standard()
-                .info("Hello, world!");
+        var logger = Logger.builder()
+                .sink(LogSink.console(LogFormatter.pretty()))
+                .level(LogLevel.TRACE)
+                .build();
+
+        logger.trace("Hello, world!");
+        logger.debug("Hello, world!");
+        logger.info("Hello, world!");
+        logger.warn("Hello, world!");
+        logger.error("Goodbye, world!");
 
         lol();
 

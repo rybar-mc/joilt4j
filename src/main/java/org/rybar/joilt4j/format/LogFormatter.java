@@ -14,4 +14,12 @@ public interface LogFormatter {
     static LogFormatter simple(final @NotNull FormatConfig config) {
         return new SimpleFormatter(config);
     }
+
+    static LogFormatter pretty() {
+        return new PrettyFormatter();
+    }
+
+    static LogFormatter pretty(final @NotNull FormatConfig config) {
+        return new PrettyFormatter(config);
+    }
 }
