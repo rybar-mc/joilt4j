@@ -8,8 +8,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.rybar.joilt4j.format.LogFormatter;
 import org.rybar.joilt4j.sink.LogSink;
 
+import java.awt.*;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -131,5 +133,22 @@ public final class LoggerTest {
                 .contains("ERROR")
                 .contains("Failed to process item-123")
                 .contains("RuntimeException: Test exception");
+    }
+
+    @Test
+    @DisplayName("Should log objects without message")
+    void shouldLogArgsWithoutMessage() {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        Logger logger = Logger.builder()
+                .sink(LogSink.console(LogFormatter.simple(), new PrintStream(outputStream)))
+                .build();
+
+        Color color = new Color(255, 0, 0);
+        Color[] colors = {color, color, color};
+
+        logger.info(color, Arrays.toString(colors));
+
+        String output = outputStream.toString();
+        assertThat(output).contains("java.awt.Color[r=255,g=0,b=0] [java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0]]");
     }
 }
