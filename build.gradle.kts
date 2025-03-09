@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "org.rybar.joilt4j"
-version = "0.0.2"
+version = "0.0.3"
 
 repositories {
     mavenCentral()
