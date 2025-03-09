@@ -126,7 +126,7 @@ class LoggerImpl implements Logger {
 
     private String formatMessage(final @Nullable String format, final Object... args) {
         if (args.length == 0 || (format != null && !format.contains("{}"))) {
-            return format;
+            return format == null ? "" : format;
         }
 
         final StringBuilder sb = new StringBuilder();

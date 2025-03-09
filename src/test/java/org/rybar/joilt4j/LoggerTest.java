@@ -151,4 +151,25 @@ public final class LoggerTest {
         String output = outputStream.toString();
         assertThat(output).contains("java.awt.Color[r=255,g=0,b=0] [java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0]]");
     }
+
+    @Test
+    @DisplayName("Should log exception without message")
+    void shouldLogExceptionWithoutMessage() {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        Logger logger = Logger.builder()
+                .sink(LogSink.console(LogFormatter.simple(), new PrintStream(outputStream)))
+                .build();
+
+        try {
+            throw new RuntimeException("Test exception");
+        } catch (RuntimeException e) {
+            logger.error(e);
+        }
+
+        String output = outputStream.toString();
+        assertThat(output)
+                .contains("ERROR")
+                .contains("RuntimeException: Test exception")
+                .doesNotContain("null");
+    }
 }
