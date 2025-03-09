@@ -1,13 +1,22 @@
 package org.rybar.joilt4j.format;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.rybar.joilt4j.LogEvent;
 
 final class SimpleFormatter implements LogFormatter {
+    @Getter
+    @Setter
+    private static SimpleFormatter instance;
+
     private final FormatConfig config;
 
     SimpleFormatter(FormatConfig config) {
+        System.out.println("SimpleFormatter constructor");
         this.config = config;
+
+        instance(this);
     }
 
     SimpleFormatter() {

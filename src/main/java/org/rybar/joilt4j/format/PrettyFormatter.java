@@ -1,5 +1,7 @@
 package org.rybar.joilt4j.format;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.rybar.joilt4j.LogEvent;
 import org.rybar.joilt4j.LogLevel;
@@ -20,6 +22,10 @@ final class PrettyFormatter implements LogFormatter {
     private static final String MAGENTA = "\u001B[35m";
     private static final String GRAY = "\u001B[90m";
 
+    @Getter
+    @Setter
+    private static PrettyFormatter instance;
+
     private static final DateTimeFormatter TIMESTAMP_FORMATTER =
             DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
                     .withZone(ZoneId.systemDefault());
@@ -28,6 +34,8 @@ final class PrettyFormatter implements LogFormatter {
 
     PrettyFormatter(FormatConfig config) {
         this.config = config;
+
+        instance(this);
     }
 
     PrettyFormatter() {
