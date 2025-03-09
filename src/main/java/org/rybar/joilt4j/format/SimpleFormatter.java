@@ -13,7 +13,6 @@ final class SimpleFormatter implements LogFormatter {
     private final FormatConfig config;
 
     SimpleFormatter(FormatConfig config) {
-        System.out.println("SimpleFormatter constructor");
         this.config = config;
 
         instance(this);
