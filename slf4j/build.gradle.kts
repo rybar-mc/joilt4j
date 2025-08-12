@@ -15,16 +15,18 @@ dependencies {
     testImplementation("org.slf4j:slf4j-api:2.0.12")
 }
 
-java {
-    withSourcesJar()
-    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
-}
-
-tasks.withType<Zip> {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-}
-
 publishing {
+    repositories {
+        maven {
+            name = "JopgaRepo"
+            url = uri("https://repo.jopga.me/releases")
+            credentials {
+                username = project.findProperty("jopga.user").toString()
+                password = project.findProperty("jopga.key").toString()
+            }
+        }
+    }
+
     publications {
         create<MavenPublication>("maven") {
             groupId = project.group as String
