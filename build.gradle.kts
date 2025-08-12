@@ -1,43 +1,50 @@
 plugins {
+    id("java")
     id("java-library")
     id("maven-publish")
 }
 
-group = "org.rybar.joilt4j"
 version = "0.0.3"
 
-repositories {
-    mavenCentral()
-}
+allprojects {
+    apply(plugin = "java")
+    apply(plugin = "java-library")
 
-dependencies {
-    compileOnly("org.jetbrains:annotations:26.0.2")
+    group = "org.rybar.joilt4j"
 
-    compileOnly("org.projectlombok:lombok:1.18.38")
-    annotationProcessor("org.projectlombok:lombok:1.18.38")
-
-    testImplementation(platform("org.junit:junit-bom:5.13.4"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testImplementation("org.assertj:assertj-core:3.27.4")
-}
-
-tasks.withType<Test> {
-    useJUnitPlatform()
-}
-
-java {
-    withSourcesJar()
-    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
-}
-
-tasks {
-    withType<JavaCompile> {
-        options.encoding = "UTF-8"
+    repositories {
+        mavenCentral()
     }
-}
 
-tasks.withType<Zip> {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    dependencies {
+        compileOnly("org.jetbrains:annotations:26.0.2")
+
+        compileOnly("org.projectlombok:lombok:1.18.38")
+        annotationProcessor("org.projectlombok:lombok:1.18.38")
+
+        testImplementation(platform("org.junit:junit-bom:5.13.4"))
+        testImplementation("org.junit.jupiter:junit-jupiter")
+        testImplementation("org.assertj:assertj-core:3.27.4")
+    }
+
+    tasks.withType<Test> {
+        useJUnitPlatform()
+    }
+
+    java {
+        withSourcesJar()
+        toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+    }
+
+    tasks {
+        withType<JavaCompile> {
+            options.encoding = "UTF-8"
+        }
+    }
+
+    tasks.withType<Zip> {
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    }
 }
 
 publishing {
