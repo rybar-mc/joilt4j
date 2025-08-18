@@ -9,10 +9,10 @@ dependencies {
     implementation(project(":"))
 
     // SLF4J API dependency
-    api("org.slf4j:slf4j-api:2.0.12")
+    api("org.slf4j:slf4j-api:2.0.17")
 
     // Test dependencies
-    testImplementation("org.slf4j:slf4j-api:2.0.12")
+    testImplementation("org.slf4j:slf4j-api:2.0.17")
 }
 
 publishing {
