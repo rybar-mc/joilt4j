@@ -1,31 +1,30 @@
 package org.rybar.joilt4j;
 
+import java.time.Instant;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import lombok.Builder;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.rybar.joilt4j.sink.LogSink;
 import org.rybar.joilt4j.format.LogFormatter;
-
-import java.time.Instant;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import org.rybar.joilt4j.sink.LogSink;
 
 @Getter
 @Builder
 class LoggerImpl implements Logger {
-    private static final @NotNull Logger STANDARD = LoggerImpl.builder()
-            .build();
+    private static final @NotNull Logger STANDARD = LoggerImpl.builder().build();
 
-    @lombok.Builder.Default private final @NotNull String name = "standard";
-    @lombok.Builder.Default private final @NotNull LogLevel level = LogLevel.INFO;
-    @lombok.Builder.Default private final @NotNull LogSink sink = LogSink.console(LogFormatter.simple());
+    @lombok.Builder.Default
+    private final @NotNull String name = "standard";
 
-    private LoggerImpl(
-            final @NotNull String name,
-            final @NotNull LogLevel level,
-            final @NotNull LogSink sink
-    ) {
+    @lombok.Builder.Default
+    private final @NotNull LogLevel level = LogLevel.INFO;
+
+    @lombok.Builder.Default
+    private final @NotNull LogSink sink = LogSink.console(LogFormatter.simple());
+
+    private LoggerImpl(final @NotNull String name, final @NotNull LogLevel level, final @NotNull LogSink sink) {
         this.name = name;
         this.level = level;
         this.sink = sink;
@@ -102,25 +101,14 @@ class LoggerImpl implements Logger {
 
     private void log(final LogLevel level, final @Nullable String message, Object... args) {
         if (levelEnabled(level)) {
-            sink.write(LogEvent.create(
-                    Instant.now(),
-                    level,
-                    formatMessage(message, args),
-                    name
-            ));
+            sink.write(LogEvent.create(Instant.now(), level, formatMessage(message, args), name));
         }
     }
 
-    private void logWithThrowable(final LogLevel level, final @Nullable String message,
-                                  final @NotNull Throwable throwable, Object... args) {
+    private void logWithThrowable(
+            final LogLevel level, final @Nullable String message, final @NotNull Throwable throwable, Object... args) {
         if (this.level.ordinal() <= level.ordinal()) {
-            sink.write(LogEvent.create(
-                    Instant.now(),
-                    level,
-                    formatMessage(message, args),
-                    name,
-                    throwable
-            ));
+            sink.write(LogEvent.create(Instant.now(), level, formatMessage(message, args), name, throwable));
         }
     }
 
@@ -144,8 +132,7 @@ class LoggerImpl implements Logger {
 
         Matcher matcher = Pattern.compile("\\{\\}").matcher(format);
         while (matcher.find() && argIndex < args.length) {
-            sb.append(format, lastPosition, matcher.start())
-                    .append(args[argIndex++]);
+            sb.append(format, lastPosition, matcher.start()).append(args[argIndex++]);
             lastPosition = matcher.end();
         }
         sb.append(format.substring(lastPosition));

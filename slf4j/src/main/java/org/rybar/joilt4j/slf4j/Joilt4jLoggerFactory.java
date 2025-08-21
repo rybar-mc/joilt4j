@@ -1,10 +1,9 @@
 package org.rybar.joilt4j.slf4j;
 
-import org.jetbrains.annotations.NotNull;
-import org.slf4j.ILoggerFactory;
-
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.ILoggerFactory;
 
 public class Joilt4jLoggerFactory implements ILoggerFactory {
     private final ConcurrentMap<String, org.slf4j.Logger> loggerCache;

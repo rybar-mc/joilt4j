@@ -1,11 +1,10 @@
 package org.rybar.joilt4j.sink;
 
+import java.io.PrintStream;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.rybar.joilt4j.LogEvent;
 import org.rybar.joilt4j.format.LogFormatter;
-
-import java.io.PrintStream;
 
 @RequiredArgsConstructor
 public final class ConsoleSink implements LogSink {
@@ -21,4 +20,3 @@ public final class ConsoleSink implements LogSink {
         out.println(formatter.format(event));
     }
 }
-
