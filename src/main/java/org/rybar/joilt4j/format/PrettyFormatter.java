@@ -1,13 +1,12 @@
 package org.rybar.joilt4j.format;
 
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.rybar.joilt4j.LogEvent;
 import org.rybar.joilt4j.LogLevel;
-
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 
 final class PrettyFormatter implements LogFormatter {
     private static final String RESET = "\u001B[0m";
@@ -27,8 +26,7 @@ final class PrettyFormatter implements LogFormatter {
     private static PrettyFormatter instance;
 
     private static final DateTimeFormatter TIMESTAMP_FORMATTER =
-            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
-                    .withZone(ZoneId.systemDefault());
+            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS").withZone(ZoneId.systemDefault());
 
     private final FormatConfig config;
 
@@ -46,16 +44,19 @@ final class PrettyFormatter implements LogFormatter {
         StringBuilder sb = new StringBuilder();
 
         if (config.showTimestamp()) {
-            sb.append(DIM).append(GRAY)
+            sb.append(DIM)
+                    .append(GRAY)
                     .append(TIMESTAMP_FORMATTER.format(event.timestamp()))
-                    .append(RESET).append(' ');
+                    .append(RESET)
+                    .append(' ');
         }
 
         if (config.showLevel()) {
             sb.append(colorizeLevel(event.level()))
                     .append(BOLD)
                     .append(padLevel(event.level()))
-                    .append(RESET).append(' ');
+                    .append(RESET)
+                    .append(' ');
         }
 
         if (config.showThread() || config.showThreadId()) {
@@ -90,10 +91,7 @@ final class PrettyFormatter implements LogFormatter {
         }
 
         if (config.showLoggerName()) {
-            sb.append(BLUE)
-                    .append(event.loggerName())
-                    .append(RESET)
-                    .append(": ");
+            sb.append(BLUE).append(event.loggerName()).append(RESET).append(": ");
         }
 
         sb.append(event.message());
@@ -128,18 +126,19 @@ final class PrettyFormatter implements LogFormatter {
             if (current != throwable) {
                 sb.append(RED).append("Caused by: ").append(RESET);
             }
-            sb.append(RED).append(BOLD)
-                    .append(current.getClass().getName());
+            sb.append(RED).append(BOLD).append(current.getClass().getName());
             if (current.getMessage() != null) {
                 sb.append(": ").append(current.getMessage());
             }
             sb.append(RESET).append('\n');
 
             for (StackTraceElement element : current.getStackTrace()) {
-                sb.append(DIM).append(GRAY)
+                sb.append(DIM)
+                        .append(GRAY)
                         .append("\tat ")
                         .append(element)
-                        .append(RESET).append('\n');
+                        .append(RESET)
+                        .append('\n');
             }
 
             current = current.getCause();

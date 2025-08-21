@@ -2,6 +2,7 @@ plugins {
     id("java")
     id("java-library")
     id("maven-publish")
+    id("com.diffplug.spotless") version "7.2.1"
 }
 
 version = "0.0.3"
@@ -44,6 +45,18 @@ allprojects {
 
     tasks.withType<Zip> {
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    }
+}
+
+spotless {
+    java {
+        importOrder()
+        removeUnusedImports()
+
+        palantirJavaFormat("2.73.0").formatJavadoc(true)
+        formatAnnotations()
+
+        target("src/main/java/**", "slf4j/src/main/java/**")
     }
 }
 

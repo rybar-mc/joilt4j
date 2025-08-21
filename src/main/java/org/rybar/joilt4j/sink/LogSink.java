@@ -1,10 +1,9 @@
 package org.rybar.joilt4j.sink;
 
+import java.io.PrintStream;
 import org.jetbrains.annotations.NotNull;
 import org.rybar.joilt4j.LogEvent;
 import org.rybar.joilt4j.format.LogFormatter;
-
-import java.io.PrintStream;
 
 public interface LogSink {
     void write(final @NotNull LogEvent event);
