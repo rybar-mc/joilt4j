@@ -25,7 +25,7 @@ allprojects {
 
         testImplementation(platform("org.junit:junit-bom:5.13.4"))
         testImplementation("org.junit.jupiter:junit-jupiter")
-        testImplementation("org.assertj:assertj-core:3.27.5")
+        testImplementation("org.assertj:assertj-core:3.27.6")
     }
 
     tasks.withType<Test> {
