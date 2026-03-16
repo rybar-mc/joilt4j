@@ -20,8 +20,8 @@ allprojects {
     dependencies {
         compileOnly("org.jetbrains:annotations:26.1.0")
 
-        compileOnly("org.projectlombok:lombok:1.18.42")
-        annotationProcessor("org.projectlombok:lombok:1.18.42")
+        compileOnly("org.projectlombok:lombok:1.18.44")
+        annotationProcessor("org.projectlombok:lombok:1.18.44")
 
         testImplementation(platform("org.junit:junit-bom:6.0.3"))
         testImplementation("org.junit.jupiter:junit-jupiter")
